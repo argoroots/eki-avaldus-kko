@@ -6,18 +6,10 @@ $(function () {
         plausible('Submit')
 
         var data = {
-            'prize-application-prize': $('#prize').val(),
-            'prize-application-category': $('#category').val(),
-            'prize-application-candidate-name': $('#candidate-name').val(),
-            'prize-application-candidate-birthyear': $('#candidate-birthyear').val(),
-            'prize-application-candidate-phone': $('#candidate-phone').val(),
-            'prize-application-candidate-email': $('#candidate-email').val(),
-            'prize-application-candidate-workplace': $('#candidate-workplace').val(),
-            'prize-application-applicant-name': $('#applicant-name').val(),
-            'prize-application-applicant-email': $('#applicant-email').val(),
-            'prize-application-applicant-workplace': $('#applicant-workplace').val(),
-            'prize-application-notes': $('#notes').val(),
-            'prize-application-urls': $('#urls').val()
+            'schoolbook-application-title': $('#title').val(),
+            'schoolbook-application-lead-name': $('#author-name').val(),
+            'schoolbook-application-lead-email': $('#author-email').val(),
+            'schoolbook-application-result': $('#urls').val()
         }
 
         var files = []
@@ -63,7 +55,7 @@ $(function () {
     })
 
     function createEntity(properties, callback) {
-        properties.definition = 'prize-application'
+        properties.definition = 'schoolbook-application'
 
         $.ajax({
             method: 'POST',
@@ -80,7 +72,7 @@ $(function () {
     function createFileProperty(entityId, file, callback) {
         var fileData = {
             entity: entityId,
-            property: 'prize-application-file',
+            property: 'schoolbook-application-file',
             filename: file.name,
             filesize: file.size,
             filetype: file.type
@@ -96,7 +88,7 @@ $(function () {
             dataType: 'json',
             success: function(data) {
                 uploadToS3(file, data.result.s3.url, data.result.s3.data, function() {
-                    callback(data.result.properties['prize-application-file'][0].id)
+                    callback(data.result.properties['schoolbook-application-file'][0].id)
                 })
             }
         })

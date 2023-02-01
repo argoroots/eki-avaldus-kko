@@ -1,91 +1,30 @@
 siteTitle: Kandidaatide esitamise elektrooniline vorm
-title: Haridus- ja Teadusministeeriumi hõimurahvaste programmi auhinnad
+title: Parima eestikeelse kõrgkooliõpiku auhind
 
 text: |
-    **NB!**
-
-    Käesoleval aastal ootame konkursile väljaspool Venemaa Föderatsiooni tegutsevaid kirjanikke.
-
-    Kuna elektroonilist vormi ei saa vahepeal salvestada, siis täitke elektrooniline taotlus alles siis, kui olete kõik vajalikud lisadokumendid kokku kogunud ja saate need taotlusele kohe juurde laadida.
+    Parima eestikeelse kõrgkooliõpiku konkursi eesmärk on tunnustada kõrgkooliõpikute koostajaid. Konkursile võivad möödunud aasta jooksul ilmunud eestikeelseid kõrgkooliõpikuid esitada kõik soovijad (k.a õpiku autor või tõlkija). Konkursile saab esitada vaid selliseid eestikeelseid kõrgkooliõpikuid, mis on tasuta avalikult kättesaadavad.
 
 form:
     -
-        id: prize
-        class: col-sm-5
-        label: Auhind
-        type: select
-        options:
-            -
-                value: Kirjandusauhind
-                text: Kirjandusauhind
+        id: title
+        label: Õpiku pealkiri
     -
-        id: category
-        label: Kategooria
-        type: select
-        options:
-            -
-                value: Aastatel 2018—2022 ilmunud teos
-                text: Aastatel 2018—2022 ilmunud teos
-            -
-                value: Hõimurahvaste kirjanduse edendamine
-                text: Hõimurahvaste kirjanduse edendamine
-        info: |
-            vt [konkursitingimustest](https://fennougria.ee/toetused/hoimurahvaste-programm/auhinnad/kirjandusauhind/){target="_blank"}
+        id: author-name
+        label: Õpiku autor(id)
     -
-        id: candidate-name
-        label: Kandidaadi nimi
-        info: |
-            kandidaadi/kandidaatide ees- ja perekonnanimi
-    -
-        id: candidate-birthyear
-        class: col-sm-5
-        label: Kandidaadi sünniaasta
-        type: number
-    -
-        id: candidate-phone
-        class: col-sm-7
-        label: Kandidaadi telefoninumber
-        type: tel
-    -
-        id: candidate-email
-        class: col-sm-7
-        label: Kandidaadi e-posti aadress
-        type: email
-    -
-        id: candidate-workplace
-        label: Kandidaadi töökoht
-    -
-        id: applicant-name
-        label: Kandidaadi esitaja nimi
-    -
-        id: applicant-email
-        class: col-sm-7
-        label: Kandidaadi esitaja e-posti aadress
-        type: email
-    -
-        id: applicant-workplace
-        label: Kandidaadi esitaja töökoht
-    -
-        id: notes
-        label: Taotluse kirjeldus
-        type: textarea
-        info: |
-            vt [konkursitingimustest](https://fennougria.ee/toetused/hoimurahvaste-programm/auhinnad/kirjandusauhind/){target="_blank"}, millised punktid tuleb välja tuua
+        id: author-email
+        label: Õpiku autori või autorite esindaja meiliaadress
     -
         id: file
-        label: Failid
+        label: Laadi üles allkirjastatud esildis
         type: file
         info: |
-            laadi üles [konkursitingimustes](https://fennougria.ee/toetused/hoimurahvaste-programm/auhinnad/kirjandusauhind/){target="_blank"} nõutud lisad
+            Esildises peavad olema toodud põhjused, miks õpik peaks pälvima aasta parima kõrgkooliõpiku auhinna. Esildise autor peab olema esildise allkirjastanud.
 
-            **NB!** Kõikide üles laaditavate failide nimetuses tuleb välja tuua dokumendi sisu ja nominendi nimi!
-            *Näide: Soovituskiri_MariMaasikas; Festivaliprogramm_MariMaasikas*
+            **NB!** Faili nimetuses tuleb esile tuua õpiku pealkiri (nt Esildis_AvalikPoliitika).
     -
         id: urls
-        label: Lingid lisamaterjalidele internetis
-        type: textarea
-        info: |
-            vt [konkursitingimustest](https://fennougria.ee/toetused/hoimurahvaste-programm/auhinnad/kirjandusauhind/){target="_blank"}, millised punktid tuleb välja tuua
+        label: Õpiku avaliku e-versiooni link
 
 submit: Esita avaldus
 
@@ -100,7 +39,7 @@ done: |
     Täname!
 
 footer: |
-    Küsimuste korral palume ühendust võtta hõimurahvaste programmi koordinaatoriga:
+    Küsimuste korral palume ühendust võtta:
 
     Marika Alver
     Eesti Keele Instituut
