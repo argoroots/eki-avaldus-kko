@@ -1,0 +1,108 @@
+siteTitle: Kandidaatide esitamise elektrooniline vorm
+title: Haridus- ja Teadusministeeriumi hõimurahvaste programmi auhinnad
+
+text: |
+    **NB!**
+
+    Käesoleval aastal ootame konkursile väljaspool Venemaa Föderatsiooni tegutsevaid kirjanikke.
+
+    Kuna elektroonilist vormi ei saa vahepeal salvestada, siis täitke elektrooniline taotlus alles siis, kui olete kõik vajalikud lisadokumendid kokku kogunud ja saate need taotlusele kohe juurde laadida.
+
+form:
+    -
+        id: prize
+        class: col-sm-5
+        label: Auhind
+        type: select
+        options:
+            -
+                value: Kirjandusauhind
+                text: Kirjandusauhind
+    -
+        id: category
+        label: Kategooria
+        type: select
+        options:
+            -
+                value: Aastatel 2018—2022 ilmunud teos
+                text: Aastatel 2018—2022 ilmunud teos
+            -
+                value: Hõimurahvaste kirjanduse edendamine
+                text: Hõimurahvaste kirjanduse edendamine
+        info: |
+            vt [konkursitingimustest](https://fennougria.ee/toetused/hoimurahvaste-programm/auhinnad/kirjandusauhind/){target="_blank"}
+    -
+        id: candidate-name
+        label: Kandidaadi nimi
+        info: |
+            kandidaadi/kandidaatide ees- ja perekonnanimi
+    -
+        id: candidate-birthyear
+        class: col-sm-5
+        label: Kandidaadi sünniaasta
+        type: number
+    -
+        id: candidate-phone
+        class: col-sm-7
+        label: Kandidaadi telefoninumber
+        type: tel
+    -
+        id: candidate-email
+        class: col-sm-7
+        label: Kandidaadi e-posti aadress
+        type: email
+    -
+        id: candidate-workplace
+        label: Kandidaadi töökoht
+    -
+        id: applicant-name
+        label: Kandidaadi esitaja nimi
+    -
+        id: applicant-email
+        class: col-sm-7
+        label: Kandidaadi esitaja e-posti aadress
+        type: email
+    -
+        id: applicant-workplace
+        label: Kandidaadi esitaja töökoht
+    -
+        id: notes
+        label: Taotluse kirjeldus
+        type: textarea
+        info: |
+            vt [konkursitingimustest](https://fennougria.ee/toetused/hoimurahvaste-programm/auhinnad/kirjandusauhind/){target="_blank"}, millised punktid tuleb välja tuua
+    -
+        id: file
+        label: Failid
+        type: file
+        info: |
+            laadi üles [konkursitingimustes](https://fennougria.ee/toetused/hoimurahvaste-programm/auhinnad/kirjandusauhind/){target="_blank"} nõutud lisad
+
+            **NB!** Kõikide üles laaditavate failide nimetuses tuleb välja tuua dokumendi sisu ja nominendi nimi!
+            *Näide: Soovituskiri_MariMaasikas; Festivaliprogramm_MariMaasikas*
+    -
+        id: urls
+        label: Lingid lisamaterjalidele internetis
+        type: textarea
+        info: |
+            vt [konkursitingimustest](https://fennougria.ee/toetused/hoimurahvaste-programm/auhinnad/kirjandusauhind/){target="_blank"}, millised punktid tuleb välja tuua
+
+submit: Esita avaldus
+
+uploading: |
+    Avaldust esitatakse.
+
+    **Palun oota!**
+
+done: |
+    **Avaldus esitatud.**
+
+    Täname!
+
+footer: |
+    Küsimuste korral palume ühendust võtta hõimurahvaste programmi koordinaatoriga:
+
+    Marika Alver
+    Eesti Keele Instituut
+    <marika.alver@eki.ee>
+    [+372 5552 9199](tel:+37255529199)

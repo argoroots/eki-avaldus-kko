@@ -1,0 +1,22 @@
+mixin markdown(text)
+    | !{ self.md(text) }
+
+mixin input(data)
+    .row
+        .form-group(class=data.class || 'col')
+            label.mt-4.mb-1(for=data.id)
+                strong= data.label
+            case data.type
+                when 'file'
+                    input.form-control-file.multi(id=data.id, type='file', multiple)
+                when 'textarea'
+                    textarea.form-control(id=data.id, rows=7)
+                when 'select'
+                    select.form-control(id=data.id)
+                        each o in data.options
+                            option(value=o.value)= o.text
+                default
+                    input.form-control(id=data.id, type=data.type)
+
+            small.form-text.text-muted
+                +markdown(data.info)

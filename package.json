@@ -1,0 +1,15 @@
+{
+  "name": "eki-avaldus-kko",
+  "version": "1.0.0",
+  "private": true,
+  "description": "EKI KKO Avaldus",
+  "author": "Argo Roots <argo@roots.ee>",
+  "license": "MIT",
+  "scripts": {
+    "build": "entu-ssg build entu-ssg.yaml full",
+    "dev": "entu-ssg serve entu-ssg.yaml full"
+  },
+  "devDependencies": {
+    "entu-ssg": "5.6.5"
+  }
+}

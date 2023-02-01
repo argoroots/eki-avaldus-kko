@@ -1,0 +1,110 @@
+siteTitle: Electronic nomination form
+title: Ministry of Education and Research of Estonia Kindred Peoples’ Programme awards
+
+
+text: |
+    **NB!**
+
+    This year, the competition welcomes the works of writers who are based outside of the Russian Federation.
+
+    Since the electronic form cannot be saved before submission, please fill it out only once you have all the required documents at hand to be uploaded with the nomination.
+
+form:
+    -
+        id: prize
+        class: col-sm-5
+        label: Award
+        type: select
+        options:
+            -
+                value: Literary Award
+                text: Literary Award
+    -
+        id: category
+        label: Category
+        type: select
+        options:
+            -
+                value: Book published in 2018—2022
+                text: Book published in 2018—2022
+            -
+                value: Promoting the literature of kindred peoples
+                text: Promoting the literature of kindred peoples
+        info: |
+            see [guidelines for nominating candidates](https://fennougria.ee/en/grants/kindred-peoples-programme/awards/literary-award/){target="_blank"}
+    -
+        id: candidate-name
+        label: Name of the nominee
+        info: |
+            first name(s) and surname(s) of the nominee(s)
+    -
+        id: candidate-birthyear
+        class: col-sm-5
+        label: Nominee’s year of birth
+        type: number
+    -
+        id: candidate-phone
+        class: col-sm-7
+        label: Nominee’s phone number
+        type: tel
+    -
+        id: candidate-email
+        class: col-sm-7
+        label: Nominee’s email address
+        type: email
+    -
+        id: candidate-workplace
+        label: Nominee’s job title
+    -
+        id: applicant-name
+        label: Nominator’s name
+    -
+        id: applicant-email
+        class: col-sm-7
+        label: Nominator’s email address
+        type: email
+    -
+        id: applicant-workplace
+        label: Nominator’s job title
+    -
+        id: notes
+        label: Description of the nomination
+        type: textarea
+        info: |
+            see the required points under [the conditions of the competition](https://fennougria.ee/en/grants/kindred-peoples-programme/awards/literary-award/){target="_blank"}
+    -
+        id: file
+        label: Files
+        type: file
+        info: |
+            upload the documents required under [the conditions of the competition](https://fennougria.ee/en/grants/kindred-peoples-programme/awards/literary-award/){target="_blank"}
+
+            **NB!** All uploaded file names must include reference to the content of the document and the nominee’s name!
+            *E.g.: Reference_JohnSmith; ListOfPublications_JohnSmith.*
+    -
+        id: urls
+        label: Links to additional materials online
+        type: textarea
+        info: |
+            see the required points under [the conditions of the competition](https://fennougria.ee/en/grants/kindred-peoples-programme/awards/literary-award/){target="_blank"}
+
+submit: Submit the nomination
+
+uploading: |
+    Saving the submission.
+
+    **Please wait!**
+
+done: |
+    **Nomination submitted.**
+
+    Thank you!
+
+footer: |
+    If you have any questions, please do not hesitate to contact the coordinator of the Kindred Peoples’ Programme:
+
+    Marika Alver
+    Kindred Peoples’ Programme
+    Institute of the Estonian Language
+    <marika.alver@eki.ee>
+    [+372 5552 9199](tel:+37255529199)
