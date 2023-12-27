@@ -10,6 +10,6 @@
     "dev": "entu-ssg serve entu-ssg.yaml full"
   },
   "devDependencies": {
-    "entu-ssg": "5.6.9"
+    "entu-ssg": "5.6.13"
   }
 }
