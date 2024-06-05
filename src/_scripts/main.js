@@ -5,12 +5,15 @@ $(function () {
 
         plausible('Submit')
 
-        var data = {
-            'schoolbook-application-title': $('#title').val(),
-            'schoolbook-application-lead-name': $('#author-name').val(),
-            'schoolbook-application-lead-email': $('#author-email').val(),
-            'schoolbook-application-result': $('#urls').val()
-        }
+        var properties = [
+            { type: '_type', reference: '66603579bb3ad6bf9b82a893' }, // schoolbook_application
+            { type: '_parent', reference: '657007dabb3ad6bf9b82a5e6' }, // Web - kko-avaldus.eki.entu.ee
+            { type: 'name', string: $('#title').val() },
+            { type: 'lead_name', string: $('#author-name').val() },
+            { type: 'lead_email', string: $('#author-email').val() },
+            { type: 'result', string: $('#urls').val() }
+        ]
+
 
         var files = []
         var fileElements = $('#file input[type="file"]')
@@ -21,87 +24,104 @@ $(function () {
             }
         }
 
-        createEntity(data, function(newEntityId) {
-            var filesUploaded = 0
-            var filesToUpload = files.length
+        getToken(function(token) {
+            if(!token) {
+                console.error('No token')
+                return
+            }
 
-            console.log('Created entity #' + newEntityId)
-            console.log(filesToUpload + ' file(s) to upload')
+            window.entuApiToken = token
 
-            if (filesToUpload > 0) {
-                for (let i = 0; i < filesToUpload; i++) {
-                    createFileProperty(newEntityId, files[i], function(result) {
-                        filesUploaded++
-                        console.log('Created file property #', result)
-                        if (filesToUpload === filesUploaded) {
-                            updateRights(newEntityId, function (r) {
-                                console.log('Updated rights')
+            createEntity(properties, function(newEntityId) {
+                var filesUploaded = 0
+                var filesToUpload = files.length
 
-                                $('#uploading').addClass('d-none')
-                                $('#done').removeClass('d-none')
-                            })
-                        }
+                console.log('Created entity #' + newEntityId)
+                console.log(filesToUpload + ' file(s) to upload')
+
+                if (filesToUpload > 0) {
+                    for (let i = 0; i < filesToUpload; i++) {
+                        createFileProperty(newEntityId, files[i], function(result) {
+                            filesUploaded++
+                            console.log('Created file property #', result)
+
+                            if (filesToUpload === filesUploaded) {
+                                updateRights(newEntityId, function (r) {
+                                    console.log('Updated rights')
+
+                                    $('#uploading').addClass('d-none')
+                                    $('#done').removeClass('d-none')
+                                })
+                            }
+                        })
+                    }
+                } else {
+                    updateRights(newEntityId, function (r) {
+                        console.log('Updated rights')
+
+                        $('#uploading').addClass('d-none')
+                        $('#done').removeClass('d-none')
                     })
                 }
-            } else {
-                updateRights(newEntityId, function (r) {
-                    console.log('Updated rights')
-
-                    $('#uploading').addClass('d-none')
-                    $('#done').removeClass('d-none')
-                })
-            }
+            })
         })
     })
 
-    function createEntity(properties, callback) {
-        properties.definition = 'schoolbook-application'
+    function getToken(callback) {
+        $.ajax({
+            method: 'GET',
+            url: 'https://entu.app/api/auth?account=eki',
+            cache: false,
+            headers: { 'Authorization': 'Bearer ' + window.entuApiKey },
+            success: function(data) {
+                callback(data.token)
+            }
+        })
+    }
 
+    function createEntity(properties, callback) {
         $.ajax({
             method: 'POST',
-            url: window.entuApiUrl + '/entity-' + window.entuApiId,
+            url: 'https://entu.app/api/eki/entity',
             cache: false,
-            data: signRequest(properties),
+            headers: { 'Authorization': 'Bearer ' + window.entuApiToken },
+            data: JSON.stringify(properties),
+            contentType: 'application/json',
             dataType: 'json',
             success: function(data) {
-                callback(data.result.id)
+                callback(data._id)
             }
         })
     }
 
     function createFileProperty(entityId, file, callback) {
-        var fileData = {
-            entity: entityId,
-            property: 'schoolbook-application-file',
+        var properties = [{
+            type: 'file',
             filename: file.name,
             filesize: file.size,
             filetype: file.type
-        }
+        }]
 
         plausible('Upload')
 
         $.ajax({
             method: 'POST',
-            url: window.entuApiUrl + '/file/s3',
+            url: 'https://entu.app/api/eki/entity/' + entityId,
             cache: false,
-            data: signRequest(fileData),
+            headers: { 'Authorization': 'Bearer ' + window.entuApiToken },
+            data: JSON.stringify(properties),
+            contentType: 'application/json',
             dataType: 'json',
             success: function(data) {
-                uploadToS3(file, data.result.s3.url, data.result.s3.data, function() {
-                    callback(data.result.properties['schoolbook-application-file'][0].id)
+                uploadFile(file, data.properties[0].upload, function() {
+                    callback(data.properties[0]._id)
                 })
             }
         })
     }
 
-    function uploadToS3(file, s3url, s3data, callback) {
+    function uploadFile(file, s3data, callback) {
         var xhr = new XMLHttpRequest()
-        var form = new FormData()
-
-        for(var i in s3data) {
-            form.append(i, s3data[i])
-        }
-        form.append('file', file)
 
         xhr.upload.addEventListener('progress', function(event) {
             if(event.lengthComputable) {
@@ -110,49 +130,42 @@ $(function () {
         }, false)
 
         xhr.onreadystatechange = function() {
-            if(xhr.readyState == 4 && xhr.status == 201) {
+            if(xhr.readyState == 4 && xhr.status == 200) {
                 callback($('Key', xhr.responseXML).text())
             }
 
-            if(xhr.readyState == 4 && xhr.status != 201) {
+            if(xhr.readyState == 4 && xhr.status != 200) {
                 console.error(file.name + ' - UPLOAD ERROR!')
             }
         }
 
-        xhr.open('POST', s3url, true)
-        xhr.send(form)
+        xhr.open(s3data.method, s3data.url, true)
+
+        for (var headerName in s3data.headers) {
+            xhr.setRequestHeader(headerName, s3data.headers[headerName])
+        }
+
+        xhr.send(file)
     }
 
     function updateRights(entityId, callback) {
-        var data = {
-            entity: window.entuApiUser
-        }
+        // var data = {
+        //     entity: window.entuApiUser
+        // }
 
-        $.ajax({
-            method: 'POST',
-            url: window.entuApiUrl + '/entity-' + entityId + '/rights',
-            cache: false,
-            data: signRequest(data),
-            dataType: 'json',
-            success: function() {
-                callback()
-            }
-        })
-    }
+        // $.ajax({
+        //     method: 'POST',
+        //     url: 'https://entu.app/api/eki/entity/' + entityId,
+        //     cache: false,
+        //     headers: { 'Authorization': 'Bearer ' + window.entuApiToken },
+        //     data: JSON.stringify(data),
+        //     contentType: 'application/json',
+        //     dataType: 'json',
+        //     success: function() {
+        //         callback()
+        //     }
+        // })
 
-    function signRequest(data) {
-        var expiration = new Date()
-        expiration.setMinutes(expiration.getMinutes() + 10)
-
-        var conditions = []
-        for(k in data) {
-            conditions.push({ k: data[k] })
-        }
-
-        data.user = window.entuApiUser
-        data.policy = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(JSON.stringify({ expiration: expiration.toISOString(), conditions: conditions })))
-        data.signature = CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA1(data['policy'], window.entuApiKey))
-
-        return data
+        callback()
     }
 })

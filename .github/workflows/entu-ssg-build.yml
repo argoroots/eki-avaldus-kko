@@ -40,10 +40,7 @@ jobs:
 
     - name: Build
       env:
-        ENTU_API_URL: ${{ secrets.ENTU_API_URL }}
-        ENTU_API_USER: ${{ secrets.ENTU_API_USER }}
         ENTU_API_KEY: ${{ secrets.ENTU_API_KEY }}
-        ENTU_API_ID: ${{ secrets.ENTU_API_ID }}
       run: |
         npm install
         npm run build
