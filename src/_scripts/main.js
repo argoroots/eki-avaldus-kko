@@ -23,45 +23,67 @@ $(function () {
             }
         }
 
-        createEntity(properties, function(newEntityId) {
-            var filesUploaded = 0
-            var filesToUpload = files.length
+        getToken(function(token) {
+            if(!token) {
+                console.error('No token')
+                return
+            }
 
-            console.log('Created entity #' + newEntityId)
-            console.log(filesToUpload + ' file(s) to upload')
+            window.entuApiToken = token
 
-            if (filesToUpload > 0) {
-                for (let i = 0; i < filesToUpload; i++) {
-                    createFileProperty(newEntityId, files[i], function(result) {
-                        filesUploaded++
-                        console.log('Created file property #', result)
+            createEntity(properties, function(newEntityId) {
+                var filesUploaded = 0
+                var filesToUpload = files.length
 
-                        if (filesToUpload === filesUploaded) {
-                            updateRights(newEntityId, function (r) {
-                                console.log('Updated rights')
+                console.log('Created entity #' + newEntityId)
+                console.log(filesToUpload + ' file(s) to upload')
 
-                                $('#uploading').addClass('d-none')
-                                $('#done').removeClass('d-none')
-                            })
-                        }
+                if (filesToUpload > 0) {
+                    for (let i = 0; i < filesToUpload; i++) {
+                        createFileProperty(newEntityId, files[i], function(result) {
+                            filesUploaded++
+                            console.log('Created file property #', result)
+
+                            if (filesToUpload === filesUploaded) {
+                                updateRights(newEntityId, function (r) {
+                                    console.log('Updated rights')
+
+                                    $('#uploading').addClass('d-none')
+                                    $('#done').removeClass('d-none')
+                                })
+                            }
+                        })
+                    }
+                } else {
+                    updateRights(newEntityId, function (r) {
+                        console.log('Updated rights')
+
+                        $('#uploading').addClass('d-none')
+                        $('#done').removeClass('d-none')
                     })
                 }
-            } else {
-                updateRights(newEntityId, function (r) {
-                    console.log('Updated rights')
-
-                    $('#uploading').addClass('d-none')
-                    $('#done').removeClass('d-none')
-                })
-            }
+            })
         })
     })
+
+    function getToken(callback) {
+        $.ajax({
+            method: 'GET',
+            url: 'https://entu.app/api/auth&account=eki',
+            cache: false,
+            headers: { 'Authorization': 'Bearer ' + window.entuApiKey },
+            success: function(data) {
+                callback(data.token)
+            }
+        })
+    }
 
     function createEntity(properties, callback) {
         $.ajax({
             method: 'POST',
             url: 'https://entu.app/api/eki/entity',
             cache: false,
+            headers: { 'Authorization': 'Bearer ' + window.entuApiToken },
             data: properties,
             dataType: 'json',
             success: function(data) {
@@ -84,6 +106,7 @@ $(function () {
             method: 'POST',
             url: 'https://entu.app/api/eki/entity/' + entityId,
             cache: false,
+            headers: { 'Authorization': 'Bearer ' + window.entuApiToken },
             data: properties,
             dataType: 'json',
             success: function(data) {
@@ -131,6 +154,7 @@ $(function () {
         //     method: 'POST',
         //     url: 'https://entu.app/api/eki/entity/' + entityId,
         //     cache: false,
+        //     headers: { 'Authorization': 'Bearer ' + window.entuApiToken },
         //     data: data,
         //     dataType: 'json',
         //     success: function() {
