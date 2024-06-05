@@ -69,7 +69,7 @@ $(function () {
     function getToken(callback) {
         $.ajax({
             method: 'GET',
-            url: 'https://entu.app/api/auth&account=eki',
+            url: 'https://entu.app/api/auth?account=eki',
             cache: false,
             headers: { 'Authorization': 'Bearer ' + window.entuApiKey },
             success: function(data) {
@@ -84,7 +84,8 @@ $(function () {
             url: 'https://entu.app/api/eki/entity',
             cache: false,
             headers: { 'Authorization': 'Bearer ' + window.entuApiToken },
-            data: properties,
+            data: JSON.stringify(properties),
+            contentType: 'application/json',
             dataType: 'json',
             success: function(data) {
                 callback(data._id)
@@ -107,7 +108,8 @@ $(function () {
             url: 'https://entu.app/api/eki/entity/' + entityId,
             cache: false,
             headers: { 'Authorization': 'Bearer ' + window.entuApiToken },
-            data: properties,
+            data: JSON.stringify(properties),
+            contentType: 'application/json',
             dataType: 'json',
             success: function(data) {
                 uploadFile(file, data.properties[0].upload, function() {
@@ -127,11 +129,11 @@ $(function () {
         }, false)
 
         xhr.onreadystatechange = function() {
-            if(xhr.readyState == 4 && xhr.status == 201) {
+            if(xhr.readyState == 4 && xhr.status == 200) {
                 callback($('Key', xhr.responseXML).text())
             }
 
-            if(xhr.readyState == 4 && xhr.status != 201) {
+            if(xhr.readyState == 4 && xhr.status != 200) {
                 console.error(file.name + ' - UPLOAD ERROR!')
             }
         }
@@ -155,7 +157,8 @@ $(function () {
         //     url: 'https://entu.app/api/eki/entity/' + entityId,
         //     cache: false,
         //     headers: { 'Authorization': 'Bearer ' + window.entuApiToken },
-        //     data: data,
+        //     data: JSON.stringify(data),
+        //     contentType: 'application/json',
         //     dataType: 'json',
         //     success: function() {
         //         callback()
