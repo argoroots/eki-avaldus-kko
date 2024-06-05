@@ -6,7 +6,8 @@ $(function () {
         plausible('Submit')
 
         var properties = [
-            { type: '_type', reference: 'schoolbook-application' },
+            { type: '_type', reference: '66603579bb3ad6bf9b82a893' }, // schoolbook_application
+            { type: '_parent', reference: '657007dabb3ad6bf9b82a5e6' }, // Web - kko-avaldus.eki.entu.ee
             { type: 'name', string: $('#title').val() },
             { type: 'lead_name', string: $('#author-name').val() },
             { type: 'lead_email', string: $('#author-email').val() },
