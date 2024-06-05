@@ -7,7 +7,7 @@ $(function () {
 
         var properties = [
             { type: '_type', reference: 'schoolbook-application' },
-            { type: 'title', string: $('#title').val() },
+            { type: 'name', string: $('#title').val() },
             { type: 'lead_name', string: $('#author-name').val() },
             { type: 'lead_email', string: $('#author-email').val() },
             { type: 'result', string: $('#urls').val() }
