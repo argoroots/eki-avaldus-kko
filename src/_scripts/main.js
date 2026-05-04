@@ -70,7 +70,7 @@ $(function () {
     function getToken(callback) {
         $.ajax({
             method: 'GET',
-            url: 'https://entu.app/api/auth?account=eki',
+            url: 'https://api.entu.app/auth?account=eki',
             cache: false,
             headers: { 'Authorization': 'Bearer ' + window.entuApiKey },
             success: function(data) {
@@ -82,7 +82,7 @@ $(function () {
     function createEntity(properties, callback) {
         $.ajax({
             method: 'POST',
-            url: 'https://entu.app/api/eki/entity',
+            url: 'https://api.entu.app/eki/entity',
             cache: false,
             headers: { 'Authorization': 'Bearer ' + window.entuApiToken },
             data: JSON.stringify(properties),
@@ -106,7 +106,7 @@ $(function () {
 
         $.ajax({
             method: 'POST',
-            url: 'https://entu.app/api/eki/entity/' + entityId,
+            url: 'https://api.entu.app/eki/entity/' + entityId,
             cache: false,
             headers: { 'Authorization': 'Bearer ' + window.entuApiToken },
             data: JSON.stringify(properties),
@@ -155,7 +155,7 @@ $(function () {
 
         // $.ajax({
         //     method: 'POST',
-        //     url: 'https://entu.app/api/eki/entity/' + entityId,
+        //     url: 'https://api.entu.app/eki/entity/' + entityId,
         //     cache: false,
         //     headers: { 'Authorization': 'Bearer ' + window.entuApiToken },
         //     data: JSON.stringify(data),
